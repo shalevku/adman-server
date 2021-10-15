@@ -1,6 +1,7 @@
 //    Imports
 import express from 'express'
 import logger from 'morgan'
+import path from 'path'
 import { userSession } from './config/Common.config.js' // TODO: Don't use the default session store.
 //    Globals and local imports
 const app = express()
@@ -11,7 +12,7 @@ const PUBLIC_ROUTES = {
 
 //    Standard routes
 // log server activities, create userSession and serve static assets (photos).
-app.use(logger('dev'), userSession, express.static('./public'))
+app.use(logger('dev'), userSession, express.static('./public'), express.static(path.join(process.cwd(), 'build')))
 // Make sure user has permission for the requested route.
 app.use((req, res, next) => {
   // It is a guest.
@@ -37,11 +38,14 @@ app.use((req, res, next) => {
 //    Method routes
 // Sub routes.
 import { UserR, UserSessionR, AdR } from './routers/index.js'
-app.use('/users', UserR)
-app.use('/userSession', UserSessionR)
-app.use('/ads', AdR)
+app.use('/api/users', UserR)
+app.use('/api/userSession', UserSessionR)
+app.use('/api/ads', AdR)
 // API only related (not related to the client side).
-app.get('/', (req, res) => {
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(process.cwd(), 'build', 'index.html'))
+})
+app.get('/api', (req, res) => {
   res.json({ message: 'Welcome the ad api' })
 })
 
@@ -54,7 +58,6 @@ app.listen(PORT)
 // * C - controller, R - router
 
 // TODOs:
-// change here to /ad/:id format or change in client URL to /ads/:id format.
 // * Extract name to person table, and change relevant code.
 // * the session doesn't work, I need to relogin on navigation to the authentication page.
 // extract the max_id from multer, because other tables might need this also.
