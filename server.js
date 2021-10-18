@@ -2,7 +2,7 @@
 import express from 'express'
 import logger from 'morgan'
 import path from 'path'
-import { userSession } from './config/Common.config.js' // TODO: Don't use the default session store.
+import { userSession } from './config/common.config.js' // TODO: Don't use the default session store.
 //    Globals and local imports
 const app = express()
 const PUBLIC_ROUTES = {
