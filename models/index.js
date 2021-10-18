@@ -9,7 +9,7 @@ User.hasMany(Ad, {
   onDelete: 'CASCADE'
 })
 // Synching all models to the database.
-sequelize.sync()
+sequelize.sync({alter: true})
 // Arrange the models for a more convenient export (other than sequelize.models).
 export { User, Ad }
 
