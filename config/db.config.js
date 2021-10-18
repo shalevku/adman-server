@@ -1,7 +1,7 @@
 //    Models
 import Sequelize from 'sequelize'
 // Define the sequelize connection to Mysql.
-const sequelize = new Sequelize('heznekdb', 'root', 'Aa123456', {
+const sequelize = new Sequelize('admandb', 'root', 'Aa123456', {
   host: 'localhost',
   dialect: 'mysql',
   define: { freezeTableName: true },
