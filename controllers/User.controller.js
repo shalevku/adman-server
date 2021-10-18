@@ -1,4 +1,4 @@
-import { User, Ad } from '../models/index.js'
+import { User } from '../models/index.js'
 import process from 'process'
 import fs from 'fs/promises'
 import path from 'path'

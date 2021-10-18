@@ -1,4 +1,4 @@
-import { sequelize } from '../config/common.config.js'
+import { sequelize } from '../config/db.config.js'
 // Defining models' associations.
 import User from './User.model.js'
 import Ad from './Ad.model.js'

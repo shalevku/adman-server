@@ -1,6 +1,6 @@
 import { UserC } from '../controllers/index.js'
 import express from 'express'
-import { upload } from '../config/common.config.js'
+import { upload } from '../config/fileManagement.config.js'
 
 const router = express.Router()
 

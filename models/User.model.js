@@ -1,6 +1,6 @@
 // Define the User model.
 import Sequelize from 'sequelize'
-import { sequelize } from '../config/common.config.js'
+import { sequelize } from '../config/db.config.js'
 const { Model, DataTypes } = Sequelize
 
 class User extends Model {}
