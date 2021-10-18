@@ -1,8 +1,8 @@
 //    Models
 import Sequelize from 'sequelize'
 // Define the sequelize connection to Mysql.
-const sequelize = new Sequelize('admandb', 'root', 'Aa123456', {
-  host: 'localhost',
+const sequelize = new Sequelize('process.env.CLEARDB_DATABASE_URL', 'b19a6b85238d18', 'Sk6340tsp', {
+  host: 'mysql://b19a6b85238d18:52fafa2f@us-cdbr-east-04.cleardb.com/heroku_77a67cd88d78e4f?reconnect=true',
   dialect: 'mysql',
   define: { freezeTableName: true },
   pool: {
