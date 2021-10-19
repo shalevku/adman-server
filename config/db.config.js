@@ -3,6 +3,7 @@ import Sequelize from 'sequelize'
 // Define the sequelize connection to Mysql.
 const sequelize = new Sequelize('heroku_77a67cd88d78e4f', 'b19a6b85238d18', '52fafa2f', {
   host: 'us-cdbr-east-04.cleardb.com',
+  port: 3306,
   dialect: 'mysql',
   define: { freezeTableName: true },
   pool: {
