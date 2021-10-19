@@ -13,15 +13,18 @@ controller.create = (req, res) => {
   User.create(user)
     .then(user => {
       // Create a photos directory named user id (email can change!) for the user.
-      const userDir = path.join(
+      const userPhotoPath = path.join(
         process.cwd(),
         'public',
         'photos',
-        user.id.toString()
+        user.id.toString(),
+        '.keep' // Because github doesn't store empty folders.
       )
-      fs.access(userDir).catch(() => {
-        fs.mkdir(userDir).then(() => {
-          res.status(201).send(user) // Respond 201 Created.
+      fs.access(userPhotoPath).catch(() => {
+        fs.mkdir(path.dirname(userPhotoPath)).then(() => {
+          fs.open(userPhotoPath, 'w').then(() => {
+            res.status(201).send(user) // Respond 201 Created.
+          })
         })
       })
     })
