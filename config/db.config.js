@@ -2,7 +2,7 @@
 import Sequelize from 'sequelize'
 // Define the sequelize connection to Mysql.
 const sequelize = new Sequelize('heroku_77a67cd88d78e4f', 'b19a6b85238d18', '52fafa2f', {
-  host: 'mysql://b19a6b85238d18:52fafa2f@us-cdbr-east-04.cleardb.com/heroku_77a67cd88d78e4f?reconnect=true',
+  host: 'us-cdbr-east-04.cleardb.com',
   dialect: 'mysql',
   define: { freezeTableName: true },
   pool: {
