@@ -12,42 +12,49 @@ const PUBLIC_ROUTES = {
 
 //    Standard routes
 // log server activities, create userSession and serve static assets (photos).
-app.use(logger('dev'), userSession, express.static('./public'), express.static(path.join(process.cwd(), 'build')))
-// Make sure user has permission for the requested route.
-app.use((req, res, next) => {
-  // It is a guest.
-  if (!req.session.user) {
-    // Guest tried to access a private route.
-    if (!PUBLIC_ROUTES[req.method]) {
-      res.sendStatus(401) // 401 Unauthorized
-      return
-    } else if (
-      !PUBLIC_ROUTES[req.method].some(publicPath =>
-        // Partial match for the path requested.
-        req.path.includes(publicPath)
-      )
-    ) {
-      res.sendStatus(401) // 401 Unauthorized
-      return
+app
+  .use(
+    logger('dev'),
+    userSession,
+    express.static('./public'),
+    express.static(path.join(process.cwd(), 'build'))
+  )
+  // Make sure user has permission for the requested route.
+  .use((req, res, next) => {
+    // It is a guest.
+    if (!req.session.user) {
+      // Guest tried to access a private route.
+      if (!PUBLIC_ROUTES[req.method]) {
+        res.sendStatus(401) // 401 Unauthorized
+        return
+      } else if (
+        !PUBLIC_ROUTES[req.method].some(publicPath =>
+          // Partial match for the path requested.
+          req.path.includes(publicPath)
+        )
+      ) {
+        res.sendStatus(401) // 401 Unauthorized
+        return
+      }
+      // TODO: maybe try the above with a regular expression.
     }
-    // TODO: maybe try the above with a regular expression.
-  }
-  next()
-})
+    next()
+  })
 
 //    Method routes
 // Sub routes.
 import { UserR, UserSessionR, AdR } from './routers/index.js'
-app.use('/api/users', UserR)
-app.use('/api/userSession', UserSessionR)
-app.use('/api/ads', AdR)
-// API only related (not related to the client side).
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(process.cwd(), 'build', 'index.html'))
-})
-app.get('/api', (req, res) => {
-  res.json({ message: 'Welcome the ad api' })
-})
+app
+  .use('/api/users', UserR)
+  .use('/api/userSession', UserSessionR)
+  .use('/api/ads', AdR)
+  // API only related (not related to the client side).
+  .get('/*', (req, res) => {
+    res.sendFile(path.join(process.cwd(), 'build', 'index.html'))
+  })
+  .get('/api', (req, res) => {
+    res.json({ message: 'Welcome the ad api' })
+  })
 
 // set port, listen for requests
 const PORT = process.env.PORT || 3080

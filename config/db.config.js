@@ -1,7 +1,13 @@
 //    Models
 import Sequelize from 'sequelize'
+
+// // Extract ClearDB credentials from Heroku config vars.
+// let tail = process.env.CLEARDB_DATABASE_URL.slice(8,-1)
+// const database = tail.slice(0, tail.indexOf(':'))
+// tail = tail.slice()
+
 // Define the sequelize connection to Mysql.
-const sequelize = new Sequelize('heroku_77a67cd88d78e4f', 'b19a6b85238d18', '52fafa2f', {
+const sequelize = new Sequelize('heroku_c2f491eba27d970', 'b907931e57d0ff', 'f3ce955f', {
   host: 'us-cdbr-east-04.cleardb.com',
   port: 3306,
   dialect: 'mysql',
