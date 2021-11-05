@@ -19,25 +19,21 @@ console.log(username)
 console.log(password)
 console.log(host)
 console.log(database)
+
 // Define the sequelize connection to Mysql.
-const sequelize = new Sequelize(
-  database,
-  username,
-  password,
-  {
-    host: host,
-    port: 3306,
-    dialect: 'mysql',
-    define: { freezeTableName: true },
-    pool: {
-      max: 5,
-      min: 0,
-      acquire: 30000,
-      idle: 10000
-    },
-    logging: false
-  }
-)
+const sequelize = new Sequelize(database, username, password, {
+  host: host,
+  port: 3306,
+  dialect: 'mysql',
+  define: { freezeTableName: true },
+  pool: {
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000
+  },
+  logging: false
+})
 
 export { sequelize }
 
