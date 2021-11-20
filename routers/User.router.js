@@ -1,13 +1,13 @@
 import { UserC } from '../controllers/index.js'
 import express from 'express'
-import { upload } from '../config/fileManagement.config.js'
+import { uploadToServer } from '../config/fileManagement.config.js'
 
 const router = express.Router()
 
 //    CR on collection
 router.route('/')
   // Create
-  .post(upload.none(), UserC.create)
+  .post(uploadToServer.none(), UserC.create)
   // Read all
   .get(UserC.readAll)
 
@@ -16,7 +16,7 @@ router.route('/:id')
   // Read
   .get(UserC.read)
   // Update
-  .put(upload.none(), UserC.update)
+  .put(uploadToServer.none(), UserC.update)
   // Destroy
   .delete(UserC.destroy)
 

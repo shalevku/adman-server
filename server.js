@@ -1,4 +1,6 @@
 //    Imports
+import dotenv from 'dotenv'
+dotenv.config()
 import express from 'express'
 import logger from 'morgan'
 import path from 'path'
@@ -16,8 +18,8 @@ app
   .use(
     logger('dev'),
     userSession,
-    express.static('./public'),
-    express.static(path.join(process.cwd(), 'build'))
+    express.static(path.join(process.cwd(), 'public')),
+    express.static(path.join(process.cwd(), 'build')) // Deployment.
   )
   // Make sure user has permission for the requested route.
   .use((req, res, next) => {
@@ -49,16 +51,18 @@ app
   .use('/api/userSession', UserSessionR)
   .use('/api/ads', AdR)
   // API only related (not related to the client side).
-  .get('/*', (req, res) => {
-    res.sendFile(path.join(process.cwd(), 'build', 'index.html'))
-  })
+  // Deployment
+  // .get('/*', (req, res) => {
+  //   res.sendFile(path.join(process.cwd(), 'build', 'index.html'))
+  // })
   .get('/api', (req, res) => {
     res.json({ message: 'Welcome the ad api' })
   })
-
 // set port, listen for requests
 const PORT = process.env.PORT || 3080
 app.listen(PORT)
+
+
 
 //      Global remarks
 // * Indentation in comments means headings at different levels.

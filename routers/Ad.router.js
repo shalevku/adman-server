@@ -1,13 +1,15 @@
 import { AdC } from '../controllers/index.js'
 import express from 'express'
-import { upload, destroySingle } from '../config/fileManagement.config.js'
+import { uploadToServer, destroySingle, uploadToS3 } from '../config/fileManagement.config.js'
 
 const router = express.Router()
+
+const upload = uploadToServer.single('photo')
 
 //    CR on collection
 router.route('/')
   // Create
-  .post(upload.single('photo'), AdC.create)
+  .post(upload, AdC.create)
   // Read all
   .get(AdC.readAll)
 
@@ -16,7 +18,7 @@ router.route('/:id')
   // Read
   .get(AdC.read)
   // Update
-  .put(upload.single('photo'), AdC.update)
+  .put(upload, AdC.update)
   // Destroy
   .delete(destroySingle, AdC.destroy)
 

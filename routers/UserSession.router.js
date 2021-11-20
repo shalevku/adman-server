@@ -1,6 +1,6 @@
 import { UserSessionC } from '../controllers/index.js'
 import express from 'express'
-import { upload } from '../config/fileManagement.config.js'
+import { uploadToServer } from '../config/fileManagement.config.js'
 
 const router = express.Router()
 
@@ -8,7 +8,7 @@ const router = express.Router()
 // Create a new element (login).
 router.route('/')
   // create (login)
-  .post(upload.none(), UserSessionC.create)
+  .post(uploadToServer.none(), UserSessionC.create)
   // Destroy (logout)
   .delete(UserSessionC.destroy)
 

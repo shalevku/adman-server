@@ -1,7 +1,10 @@
 //    Models
 import Sequelize from 'sequelize'
+import dotenv from 'dotenv'
+dotenv.config()
 
-// Extract ClearDB credentials from Heroku config vars.
+// Extract ClearDB credentials from Heroku config vars (if present)
+console.log(process.env.CLEARDB_DATABASE_URL)
 const dbUrl = process.env.CLEARDB_DATABASE_URL
 const delimiters = [
   dbUrl.indexOf('//'),
@@ -14,11 +17,6 @@ const username = dbUrl.slice(delimiters[0] + 2, delimiters[1])
 const password = dbUrl.slice(delimiters[1] + 1, delimiters[2])
 const host = dbUrl.slice(delimiters[2] + 1, delimiters[3])
 const database = dbUrl.slice(delimiters[3] + 1, delimiters[4])
-console.log('db credentials')
-console.log(username)
-console.log(password)
-console.log(host)
-console.log(database)
 
 // Define the sequelize connection to Mysql.
 const sequelize = new Sequelize(database, username, password, {

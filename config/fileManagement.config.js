@@ -49,7 +49,7 @@ const storage = multer.diskStorage({
   }
 })
 // For single() multer middleware (upload an ad photo).
-const upload = multer({ storage: storage })
+const uploadToServer = multer({ storage: storage })
 // Delete a photo in the delete method.
 const destroySingle = (req, res, next) => {
   const id = req.params.id
@@ -77,4 +77,34 @@ const destroySingle = (req, res, next) => {
   next()
 }
 
-export { upload, destroySingle }
+import aws from 'aws-sdk'
+aws.config.region = 'us-east-2'
+
+// Upload to S3
+const uploadToS3 = (req, res, next) => {
+  const s3 = new aws.S3()
+  const fileName = req.query['file-name']
+  const fileType = req.query['file-type']
+  const s3Params = {
+    Bucket: process.env.S3_BUCKET,
+    Key: fileName,
+    Expires: 60,
+    ContentType: fileType,
+    ACL: 'public-read'
+  }
+
+  s3.getSignedUrl('putObject', s3Params, (err, data) => {
+    if (err) {
+      console.log(err)
+      return res.end()
+    }
+    const returnData = {
+      signedRequest: data,
+      url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
+    }
+    res.write(JSON.stringify(returnData))
+    res.end()
+  })
+  next()
+}
+export { uploadToServer, destroySingle, uploadToS3 }
