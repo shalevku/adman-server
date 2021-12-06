@@ -1,7 +1,5 @@
 //    Models
 import Sequelize from 'sequelize'
-import dotenv from 'dotenv'
-dotenv.config()
 
 // Extract ClearDB credentials from Heroku config vars (if present)
 console.log(process.env.CLEARDB_DATABASE_URL)

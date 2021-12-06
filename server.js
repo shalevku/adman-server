@@ -1,6 +1,4 @@
 //    Imports
-import dotenv from 'dotenv'
-dotenv.config()
 import express from 'express'
 import logger from 'morgan'
 import path from 'path'
