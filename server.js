@@ -3,23 +3,23 @@ import express from 'express'
 import logger from 'morgan'
 import path from 'path'
 import { userSession } from './config/session.config.js' // TODO: Don't use the default session store.
-//    Globals and local imports
+//    Globals
 const app = express()
 const PUBLIC_ROUTES = {
   GET: ['/public', '/ads', '/'],
   POST: ['/users', 'userSession']
 }
 
-//    Standard routes
-// log server activities, create userSession and serve static assets (photos).
+// Mount Standard middleware
 app
+  // log server activities, create userSession and serve static assets (photos).
   .use(
     logger('dev'),
     userSession,
-    express.static(path.join(process.cwd(), 'public')),
-    express.static(path.join(process.cwd(), 'build')) // Deployment.
+    express.static(path.join(process.cwd(), 'public'))
+    // express.static(path.join(process.cwd(), 'build')) // Deployment.
   )
-  // Make sure user has permission for the requested route.
+  // Validate user has permission.
   .use((req, res, next) => {
     // It is a guest.
     if (!req.session.user) {
@@ -57,10 +57,8 @@ app
     res.json({ message: 'Welcome the ad api' })
   })
 // set port, listen for requests
-const PORT = process.env.PORT || 3080
+const PORT = process.env.PORT || 5000
 app.listen(PORT)
-
-
 
 //      Global remarks
 // * Indentation in comments means headings at different levels.

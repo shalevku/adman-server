@@ -2,7 +2,6 @@
 import Sequelize from 'sequelize'
 
 // Extract ClearDB credentials from Heroku config vars (if present)
-console.log(process.env.CLEARDB_DATABASE_URL)
 const dbUrl = process.env.CLEARDB_DATABASE_URL
 const delimiters = [
   dbUrl.indexOf('//'),
