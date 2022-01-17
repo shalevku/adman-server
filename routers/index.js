@@ -2,4 +2,5 @@
 import UserR from "./User.router.js"
 import UserSessionR from "./UserSession.router.js"
 import AdR from "./Ad.router.js"
-export { UserR, UserSessionR, AdR }
+import AdPhotoR from "./AdPhoto.router.js"
+export { UserR, UserSessionR, AdR, AdPhotoR }

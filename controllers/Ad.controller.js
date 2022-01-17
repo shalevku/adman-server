@@ -59,8 +59,6 @@ controller.read = (req, res) => {
 controller.update = (req, res) => {
   const id = req.params.id
   const ad = req.body
- console.log(id)
- console.log(ad)
   Ad.update(ad, {
     where: { id: id }
   })

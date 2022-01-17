@@ -5,6 +5,9 @@ const { Model, DataTypes } = Sequelize
 class Ad extends Model {}
 Ad.init(
   {
+    photo: {
+      type: DataTypes.STRING
+    },
     gender: {
       type: DataTypes.STRING(30),
       allowNull: false
@@ -28,9 +31,6 @@ Ad.init(
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false
-    },
-    photoName: {
-      type: DataTypes.STRING
     }
   },
   { sequelize, modelName: 'Ad' }

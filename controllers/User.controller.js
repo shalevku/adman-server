@@ -1,7 +1,4 @@
 import { User } from '../models/index.js'
-import process from 'process'
-import fs from 'fs/promises'
-import path from 'path'
 
 const controller = {}
 
@@ -12,21 +9,7 @@ controller.create = (req, res) => {
   // Save User in the database
   User.create(user)
     .then(user => {
-      // Create a photos directory named user id (email can change!) for the user.
-      const userPhotoPath = path.join(
-        process.cwd(),
-        'public',
-        'photos',
-        user.id.toString(),
-        '.keep' // Because github doesn't store empty folders.
-      )
-      fs.access(userPhotoPath).catch(() => {
-        fs.mkdir(path.dirname(userPhotoPath)).then(() => {
-          fs.open(userPhotoPath, 'w').then(() => {
-            res.status(201).send(user) // Respond 201 Created.
-          })
-        })
-      })
+      res.status(201).send(user) // Respond 201 Created.
     })
     .catch(err => {
       console.log(err)
@@ -93,23 +76,14 @@ controller.update = (req, res) => {
 // Destroy
 controller.destroy = (req, res) => {
   const id = req.params.id
-  // Delete his photos folder
-  const destroyFolderPromise = fs.rm(
-    path.join(process.cwd(), 'public', 'photos', id.toString()),
-    { recursive: true }
-  )
   // Destroy the user (and cascading to delete his ads ).
-  const destroyUserPromise = User.destroy({
+  User.destroy({
     where: { id: id }
   })
-
-  Promise.all([destroyFolderPromise, destroyUserPromise])
-    .then(([isRmFailed, num]) => {
-      if (!isRmFailed && num === 1) {
-        res.sendStatus(204) // 204 No Content
-      } else {
-        res.sendStatus(400) // 400 Bad Request
-      }
+    .then(num => {
+      if (num === 1) res.sendStatus(204)
+      // 204 No Content
+      else res.sendStatus(400) // 400 Bad Request
     })
     .catch(err => {
       console.log(err)

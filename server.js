@@ -1,7 +1,6 @@
 //    Imports
 import express from 'express'
 import logger from 'morgan'
-import path from 'path'
 import { userSession } from './config/session.config.js' // TODO: Don't use the default session store.
 //    Globals
 const app = express()
@@ -16,7 +15,8 @@ app
   .use(
     logger('dev'),
     userSession,
-    express.static(path.join(process.cwd(), 'public'))
+    express.static('./public'), // TODO: probably need join process.cwd() cwd.
+    express.json()
     // express.static(path.join(process.cwd(), 'build')) // Deployment.
   )
   // Validate user has permission.
@@ -43,11 +43,12 @@ app
 
 //    Method routes
 // Sub routes.
-import { UserR, UserSessionR, AdR } from './routers/index.js'
+import { UserR, UserSessionR, AdR, AdPhotoR } from './routers/index.js'
 app
   .use('/api/users', UserR)
   .use('/api/userSession', UserSessionR)
   .use('/api/ads', AdR)
+  .use('/api/adsPhotos', AdPhotoR)
   // API only related (not related to the client side).
   // Deployment
   // .get('/*', (req, res) => {
@@ -56,6 +57,7 @@ app
   .get('/api', (req, res) => {
     res.json({ message: 'Welcome the ad api' })
   })
+
 // set port, listen for requests
 const PORT = process.env.PORT || 5000
 app.listen(PORT)

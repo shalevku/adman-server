@@ -2,4 +2,5 @@
 import UserC from "./User.controller.js"
 import UserSessionC from "./UserSession.controller.js"
 import AdC from "./Ad.controller.js"
-export { UserC, UserSessionC, AdC }
+import AdPhotoC from "./AdPhoto.controller.js"
+export { UserC, UserSessionC, AdC, AdPhotoC}
