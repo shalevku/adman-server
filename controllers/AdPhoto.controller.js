@@ -9,7 +9,9 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 const BUCKET_NAME = 'adman-preview'
 const REGION = 'us-east-2'
 const s3Client = new S3Client({ region: REGION })
-
+console.log('aws creds:')
+console.log(process.env.aws_access_key_id)
+console.log(process.env.aws_secret_access_key)
 const controller = {}
 
 //    C on collection (of files)
