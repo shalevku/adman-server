@@ -1,4 +1,5 @@
 //    Imports
+import path from 'path'
 import express from 'express'
 import logger from 'morgan'
 import { userSession } from './config/session.config.js' // TODO: Don't use the default session store.
@@ -13,11 +14,11 @@ const PUBLIC_ROUTES = {
 app
   // log server activities, create userSession and serve static assets (photos).
   .use(
+    express.static(path.join(process.cwd(), 'public')),
+    express.static(path.join(process.cwd(), 'build')), // Deployment.
     logger('dev'),
     userSession,
-    express.static('./public'), // TODO: probably need join process.cwd() cwd.
     express.json()
-    // express.static(path.join(process.cwd(), 'build')) // Deployment.
   )
   // Validate user has permission.
   .use((req, res, next) => {
@@ -49,11 +50,10 @@ app
   .use('/api/userSession', UserSessionR)
   .use('/api/ads', AdR)
   .use('/api/adsPhotos', AdPhotoR)
-  // API only related (not related to the client side).
   // Deployment
-  // .get('/*', (req, res) => {
-  //   res.sendFile(path.join(process.cwd(), 'build', 'index.html'))
-  // })
+  .get('/*', (req, res) => {
+    res.sendFile(path.join(process.cwd(), 'build', 'index.html'))
+  })
   .get('/api', (req, res) => {
     res.json({ message: 'Welcome the ad api' })
   })
